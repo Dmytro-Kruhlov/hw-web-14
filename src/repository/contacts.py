@@ -1,4 +1,4 @@
-from sqlalchemy import or_
+
 from sqlalchemy.orm import Session
 
 from src.database.models import Contact
@@ -41,7 +41,7 @@ async def get_contact_by_lastname(db: Session, firstname: str=None, lastname: st
 
 
 async def create_contact(body: ContactModel, db: Session):
-    contact = Contact(**body.dict())
+    contact = Contact(**body.model_dump())
     db.add(contact)
     db.commit()
     db.refresh(contact)

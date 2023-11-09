@@ -5,7 +5,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from src.database.db import get_db
-from src.routes import contacts
+from src.routes import contacts, auth
 
 app = FastAPI()
 
@@ -27,7 +27,7 @@ def read_root():
 @app.get("/hw11/healthchecker")
 def healthchecker(db: Session = Depends(get_db)):
     try:
-        # Make request
+
         result = db.execute(text("SELECT 1")).fetchone()
         print(result)
         if result is None:
@@ -41,6 +41,7 @@ def healthchecker(db: Session = Depends(get_db)):
 
 
 app.include_router(contacts.router, prefix='/hw11')
+app.include_router(auth.router, prefix='/hw11')
 
 
 
